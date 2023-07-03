@@ -5,6 +5,26 @@
   text-align: center;
 }
 
+#dropzone {
+  width: 400px;
+  height: 200px;
+  border: 2px dashed #aaa;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.language-section {
+  margin-bottom: 20px;
+}
+
+.submit-section {
+  margin-bottom: 20px;
+}
+
+
 .logo {
   height: 6em;
   padding: 1.5em;

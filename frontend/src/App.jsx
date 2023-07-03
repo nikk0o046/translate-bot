@@ -1,34 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import Header from './components/Header';
+import FileSelector from './components/FileSelector';
+import LanguageSelector from './components/LanguageSelector';
+import SubmitButton from './components/SubmitButton';
+import DownloadBox from './components/DownloadBox';
+
+const App = () => {
+  const [selectedFile, setSelectedFile] = useState(null)
+  const [selectedLanguage, setSelectedLanguage] = useState(null)
+  const [receivedFiles, setReceivedFiles] = useState([])
+  const [uploadedFileName, setUploadedFileName] = useState(null)  // new state variable for uploaded file name
+
+  const languages = ["English", "Spanish", "French", "German"] 
+
+  const handleFileSelect = (file) => {
+    console.log('Selected file:', file);
+    setSelectedFile(file);
+    setUploadedFileName(file.name);  // update the uploaded file name when a file is selected
+  }
+
+  const handleLanguageSelect = (event) => {
+    setSelectedLanguage(event.target.value)
+  }
+
+  const handleSubmit = () => {
+    // TODO: Add logic to send selectedFile and selectedLanguage to the backend
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <Header />
+      <FileSelector onFileSelect={handleFileSelect} />
+      {uploadedFileName && <p>{uploadedFileName} uploaded successfully.</p>}
+      <div className="language-section">
+        <LanguageSelector languages={languages} onLanguageSelect={handleLanguageSelect} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="submit-section">
+        <SubmitButton onSubmit={handleSubmit} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <DownloadBox files={receivedFiles} />
+    </div>
   )
 }
 
