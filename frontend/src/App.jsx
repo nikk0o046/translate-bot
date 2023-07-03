@@ -13,7 +13,7 @@ const App = () => {
   const [receivedFiles, setReceivedFiles] = useState([])
   const [uploadedFileName, setUploadedFileName] = useState(null)  // new state variable for uploaded file name
 
-  const languages = ["English", "Spanish", "French", "German"] 
+  const languages = ["English", "Spanish", "French", "German", "Finnish"] 
 
   const handleFileSelect = (file) => {
     console.log('Selected file:', file);
