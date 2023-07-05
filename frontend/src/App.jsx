@@ -26,8 +26,28 @@ const App = () => {
   }
 
   const handleSubmit = () => {
-    // TODO: Add logic to send selectedFile and selectedLanguage to the backend
-  }
+    if (!selectedFile || !selectedLanguage) {
+      alert("Please select a file and a language.");
+      return;
+    }
+  
+    const data = new FormData();
+    data.append("file", selectedFile);
+    data.append("language", selectedLanguage);
+  
+    fetch('your-backend-url', {
+      method: 'POST',
+      body: data,
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Handle the response data from the server here
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }  
 
   return (
     <div className="App">
