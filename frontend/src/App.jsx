@@ -6,14 +6,16 @@ import FileSelector from './components/FileSelector';
 import LanguageSelector from './components/LanguageSelector';
 import SubmitButton from './components/SubmitButton';
 import DownloadBox from './components/DownloadBox';
+import SubtitleViewer from './components/SubtitleViewer';
 
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null)
-  const [selectedLanguage, setSelectedLanguage] = useState(null)
+  const [selectedLanguages, setSelectedLanguages] = useState(null)
   const [receivedFiles, setReceivedFiles] = useState([])
   const [uploadedFileName, setUploadedFileName] = useState(null)  // new state variable for uploaded file name
+  const [responseBody, setResponseBody] = useState(null);
 
-  const languages = ["English", "Spanish", "French", "German", "Finnish"] 
+  const languages = ["English", "Spanish", "French", "German", "Finnish"]
 
   const handleFileSelect = (file) => {
     console.log('Selected file:', file);
@@ -22,27 +24,28 @@ const App = () => {
   }
 
   const handleLanguageSelect = (event) => {
-    setSelectedLanguage(event.target.value)
+    setSelectedLanguages([event.target.value]);
   }
 
   const handleSubmit = () => {
-    if (!selectedFile || !selectedLanguage) {
+    if (!selectedFile || !selectedLanguages) {
       alert("Please select a file and a language.");
       return;
     }
   
     const data = new FormData();
     data.append("file", selectedFile);
-    data.append("language", selectedLanguage);
+    data.append("targetLanguages", JSON.stringify(selectedLanguages));
+    data.append("sourceLanguage", "English")
   
-    fetch('your-backend-url', {
+    fetch('https://europe-north1-grand-eye-390516.cloudfunctions.net/translating-bot-backend', {
       method: 'POST',
       body: data,
     })
     .then(response => response.json())
-    .then(data => {
+    .then(responseData => {
       // Handle the response data from the server here
-      console.log(data);
+      setResponseBody(responseData);
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -61,6 +64,9 @@ const App = () => {
         <SubmitButton onSubmit={handleSubmit} />
       </div>
       <DownloadBox files={receivedFiles} />
+      <div>
+      <SubtitleViewer responseBody={responseBody} />
+      </div>
     </div>
   )
 }
