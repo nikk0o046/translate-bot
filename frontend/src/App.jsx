@@ -11,11 +11,8 @@ import SubtitleViewer from './components/SubtitleViewer';
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null)
   const [selectedLanguages, setSelectedLanguages] = useState(null)
-  const [receivedFiles, setReceivedFiles] = useState([])
   const [uploadedFileName, setUploadedFileName] = useState(null)  // new state variable for uploaded file name
   const [responseBody, setResponseBody] = useState(null);
-
-  const languages = ["English", "Spanish", "French", "German", "Finnish"]
 
   const handleFileSelect = (file) => {
     console.log('Selected file:', file);
@@ -24,8 +21,10 @@ const App = () => {
   }
 
   const handleLanguageSelect = (event) => {
-    setSelectedLanguages([event.target.value]);
+    const selectedLanguages = Array.from(event.target.selectedOptions, option => option.value);
+    setSelectedLanguages(selectedLanguages);
   }
+  
 
   const handleSubmit = () => {
     if (!selectedFile || !selectedLanguages) {
@@ -58,12 +57,11 @@ const App = () => {
       <FileSelector onFileSelect={handleFileSelect} />
       {uploadedFileName && <p>{uploadedFileName} uploaded successfully.</p>}
       <div className="language-section">
-        <LanguageSelector languages={languages} onLanguageSelect={handleLanguageSelect} />
+        <LanguageSelector onLanguageSelect={handleLanguageSelect} />
       </div>
       <div className="submit-section">
         <SubmitButton onSubmit={handleSubmit} />
       </div>
-      <DownloadBox files={receivedFiles} />
       <div>
       <SubtitleViewer responseBody={responseBody} />
       </div>
