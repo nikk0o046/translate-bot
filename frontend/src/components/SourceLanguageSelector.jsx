@@ -1,7 +1,6 @@
 import React from 'react';
 
-const LanguageSelector = ({ onLanguageSelect, id }) => {
-
+const SourceLanguageSelector = ({ onLanguageSelect, id }) => {
   const languages = [
     "Croatian",
     "Czech",
@@ -23,17 +22,17 @@ const LanguageSelector = ({ onLanguageSelect, id }) => {
     "Romanian",
     "Spanish",
     "Swedish"
-    ];
-    
-    return (
-      <select id={id} multiple onChange={onLanguageSelect}>
-        {languages.map((lang) => (
-          <option key={lang} value={lang}>
-            {lang}
-          </option>
-        ))}
-      </select>
-    );
+  ];
+
+  return (
+    <select id={id} multiple onChange={onLanguageSelect}>
+      {languages.map((lang) => (
+        <option key={lang} value={lang}>
+          {lang}
+        </option>
+      ))}
+    </select>
+  );
 };
 
-export default LanguageSelector;
+export default SourceLanguageSelector;
